@@ -224,8 +224,8 @@ def process_request(request):
                 recent_item.brand = "other"
                 make = None
 
-            if regex.match(r'(19|20)\d{2}', title):
-                year = regex.match(r'(19|20)\d{2}', title)
+            if re.match(r'(19|20)\d{2}', title):
+                year = re.match(r'(19|20)\d{2}', title)
             
                 item.year = str(year)[38:42]
                 recent_item.year = str(year)[38:42]              
@@ -234,8 +234,8 @@ def process_request(request):
                 sub = str(title)[i + 4:]
                 
             else:
-                if regex.match(r'(19|20)\d{2}', description):
-                    year = regex.match(r'(19|20)\d{2}', description)                    
+                if re.match(r'(19|20)\d{2}', description):
+                    year = re.match(r'(19|20)\d{2}', description)                    
                     item.year = str(year)[38:42]
                     recent_item.year = str(year)[38:42] 
 
