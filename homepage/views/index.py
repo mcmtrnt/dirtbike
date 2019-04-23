@@ -227,8 +227,8 @@ def process_request(request):
             if regex.match(r'(19|20)\d{2}', title):
                 year = regex.match(r'(19|20)\d{2}', title)
             
-                item.year = str(year)[41:45]
-                recent_item.year = str(year)[41:45]              
+                item.year = str(year)[38:42]
+                recent_item.year = str(year)[38:42]              
 
                 i = str(title).find(str(item.year))
                 sub = str(title)[i + 4:]
