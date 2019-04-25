@@ -137,84 +137,86 @@ def process_request(request):
             recent_item.description = description
 
             #convert title to lowercase before checking!! duh dude                    
-            if 'CRF' in title or 'crf' in title or 'Crf' in title:
+            title = title.lower()
+
+            if 'crf' in title:
                 item.brand = "CRF"
                 recent_item.brand = "CRF"
                 make = "honda"
-            elif 'CR' in title or 'Cr' in title or 'cr' in title: #this is case sensitive...
+            elif 'cr' in title: 
                 item.brand = "CR"
                 recent_item.brand = "CR"
                 make = "honda"
-            elif 'XR' in title or 'xr' in title or 'Xr' in title:
+            elif 'xr' in title:
                 item.brand = "XR"
                 recent_item.brand = "XR"
                 make = "honda"
-            elif 'Honda' in title or 'honda' in title:   
+            elif 'honda' in title:   
                 item.brand = 'honda'
                 recent_item.brand = 'honda' 
                 make = "honda"
                       
-            elif 'YZ' in title or 'Yz' in title or 'yz' in title:
+            elif 'yz' in title:
                 item.brand = "YZ"
                 recent_item.brand = "YZ"
                 make = "yamaha"
-            elif 'TTR' in title or 'TT-R' in title or 'ttr' in title or 'Ttr' in title  or 'TT R' in title  or 'tt r' in title:
+            elif 'tt-r' in title or 'ttr' in title or 'tt r' in title:
                 item.brand = "TTR"
                 recent_item.brand = "TTR"
                 make = "yamaha"
-            elif 'WR' in title or 'Wr' in title or 'wr' in title:
+            elif 'wr' in title:
                 item.brand = "WR"
                 recent_item.brand = "WR"
                 make = "yamaha"
-            elif 'PW' in title or 'pw' in title or 'Pw' in title:
+            elif 'pw' in title:
                 item.brand = "PW"
                 recent_item.brand = "PW"
                 make = "yamaha"
-            elif 'TW' in title or 'tw' in title or 'Tw' in title:
+            elif 'tw' in title:
                 item.brand = "TW"
                 recent_item.brand = "TW"
                 make = "yamaha"
-            elif 'Yamaha' in title or 'yamaha' in title:
+            elif 'yamaha' in title:
                 item.brand = "yamaha"
                 recent_item.brand = "yamaha"
                 make = "yamaha"
 
-            elif 'KTM' in title or 'Ktm' in title or 'ktm' in title:
+            elif 'ktm' in title:
                 item.brand = "ktm"
                 recent_item.brand = "ktm"
                 make = "ktm"
                  
-            elif 'DR-Z' in title or 'DRZ' in title or 'dr-z' in title or 'drz' in title or 'Drz' in title:
+            elif 'dr-z' in title or 'drz' in title :
                 item.brand = "DR-Z"
                 recent_item.brand = "DR-Z"
                 make = "suzuki"
-            elif 'RMZ' in title or 'Rmz' in title or 'rmz' in title:
+            elif 'rmz' in title:
                 item.brand = "RM-Z"
                 recent_item.brand = "RM-Z"
                 make = "suzuki"
-            elif 'RM' in title or 'Rm' in title or 'rm' in title:
+            elif 'rm' in title:
                 item.brand = "RM"
                 recent_item.brand = "RM"
                 make = "suzuki"
-            elif 'Suzuki' in title or 'suzuki' in title:
+            elif 'suzuki' in title:
                 item.brand = "suzuki"
                 recent_item.brand = "suzuki"
                 make = "suzuki"
            
-            elif 'KLX' in title or 'Klx' in title or 'klx' in title:
+            elif 'klx' in title:
                 item.brand = "KLX"
                 recent_item.brand = "KLX"
                 make = "kawasaki"
-            elif 'KX' in title or 'kx' in title or 'Kx' in title:
+            elif 'kx' in title:
                 item.brand = "KX"
                 recent_item.brand = "KX"
                 make = "kawasaki"
-            elif 'Kawasaki' in title or 'kawasaki' in title:
+            elif 'kawasaki' in title:
                 item.brand = "kawasaki"
                 recent_item.brand = "kawasaki"
                 make = "kawasaki"
 
-            elif 'Husqvarna' in title or 'husqvarna' in title: 
+            elif 'husqvarna' in title: 
                 item.brand = "husqvarna"
                 recent_item.brand = "husqvarna"
                 make = None
@@ -224,27 +226,38 @@ def process_request(request):
                 recent_item.brand = "other"
                 make = None
 
-            if re.match(r'(19|20)\d{2}', title):
-                year = re.match(r'(19|20)\d{2}', title)
-            
-                item.year = str(year)[38:42]
-                recent_item.year = str(year)[38:42]              
+        
+            year = find_year(title, description)
+            item.year = year
+            recent_item.year = year
 
+            # if re.match(r'(19|20)\d{2}', title):
+            #     year = re.match(r'(19|20)\d{2}', title)
+            
+            #     item.year = str(year)[38:42]
+            #     recent_item.year = str(year)[38:42]  
+
+            if year is None:
+                sub = str(title)                
+
+            else:
                 i = str(title).find(str(item.year))
                 sub = str(title)[i + 4:]
-                
-            else:
-                if re.match(r'(19|20)\d{2}', description):
-                    year = re.match(r'(19|20)\d{2}', description)                    
-                    item.year = str(year)[38:42]
-                    recent_item.year = str(year)[38:42] 
 
-                    i = str(title).find(str(item.year))
-                    sub = str(title)[i + 4:]
-                else:
-                    sub = str(title)
-                    item.year = None 
-                    recent_item.year = None     
+            
+                
+            # else:
+            #     if re.match(r'(19|20)\d{2}', description):
+            #         year = re.match(r'(19|20)\d{2}', description)                    
+            #         item.year = str(year)[38:42]
+            #         recent_item.year = str(year)[38:42] 
+
+            #         i = str(title).find(str(item.year))
+            #         sub = str(title)[i + 4:]
+            #     else:
+            #         sub = str(title)
+            #         item.year = None 
+            #         recent_item.year = None     
 
 
             size = find_size(sub)
@@ -276,7 +289,7 @@ def process_request(request):
                 }
 
                 with requests.Session() as sesh:     
-                    r = sesh.get('https://www.kbb.com/motorcycles/' + make + '/' + model + '/' + item.year + '/?pricetype=trade-in', headers=headers) #make/model/year
+                    r = sesh.get('https://www.kbb.com/motorcycles/' + make + '/' + model + '/' + str(item.year) + '/?pricetype=trade-in', headers=headers) #make/model/year
                     soup = BeautifulSoup(r.content, 'html.parser')
 
                 start = str(soup).find('msrp')
@@ -691,4 +704,68 @@ def find_size(sub):
         return 0      
 
 
+def find_year(title, description):
 
+    if '1990' in title or '1990' in description:
+        return 1990
+    elif '1991' in title or '1991' in description:
+        return 1991
+    elif '1992' in title or '1992' in description:
+        return 1992
+    elif '1993' in title or '1993' in description:
+        return 1993
+    elif '1994' in title or '1994' in description:
+        return 1994
+    elif '1995' in title or '1995' in description:
+        return 1995
+    elif '1996' in title or '1996' in description:
+        return 1996
+    elif '1997' in title or '1997' in description:
+        return 1997
+    elif '1998' in title or '1998' in description:
+        return 1998
+    elif '1999' in title or '1999' in description:
+        return 1999
+    elif '2000' in title or '2000' in description:
+        return 2000
+    elif '2001' in title or '2001' in description:
+        return 2001
+    elif '2002' in title or '2002' in description:
+        return 2002
+    elif '2003' in title or '2003' in description:
+        return 2003
+    elif '2004' in title or '2004' in description:
+        return 2004
+    elif '2005' in title or '2005' in description:
+        return 2005
+    elif '2006' in title or '2006' in description:
+        return 2006
+    elif '2007' in title or '2007' in description:
+        return 2007
+    elif '2008' in title or '2008' in description:
+        return 2008
+    elif '2009' in title or '2009' in description:
+        return 2009
+    elif '2010' in title or '2010' in description:
+        return 2010
+    elif '2011' in title or '2011' in description:
+        return 2011
+    elif '2012' in title or '2012' in description:
+        return 2012
+    elif '2013' in title or '2013' in description:
+        return 2013
+    elif '2014' in title or '2014' in description:
+        return 2014
+    elif '2015' in title or '2015' in description:
+        return 2015
+    elif '2016' in title or '2016' in description:
+        return 2016
+    elif '2017' in title or '2017' in description:
+        return 2017
+    elif '2018' in title or '2018' in description:
+        return 2018
+    elif '2019' in title or '2019' in description:
+        return 2019
+    else:
+        return None
+    
