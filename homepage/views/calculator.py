@@ -22,6 +22,7 @@ def process_request(request):
             make = form.cleaned_data.get('Make')
             model = form.cleaned_data.get('Model')
             
+            make = make.lower()
 
             url = "https://ussouthcentral.services.azureml.net/workspaces/fc99097f01f349e2b6c076486b11bd6a/services/06579f005e044a81bd6f06e43252afd0/execute"
 
