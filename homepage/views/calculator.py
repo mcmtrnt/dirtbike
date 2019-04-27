@@ -59,6 +59,8 @@ def process_request(request):
         'value': value,
     }
 
+    print(environ['wsgi.errors'])
+
     return request.dmp.render('calculator.html', context)
 
 
