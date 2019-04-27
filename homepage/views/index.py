@@ -1,11 +1,11 @@
- from django.conf import settings
- from django_mako_plus import view_function, jscontext
+from django.conf import settings
+from django_mako_plus import view_function, jscontext
 # from bs4 import BeautifulSoup
 # import requests
 # from homepage import models as hmod
 # import re
 # from datetime import datetime, timedelta  
- from django import forms
+from django import forms
 # from django.core import validators
 # from django.core.exceptions import ValidationError
 # import time
@@ -13,8 +13,8 @@
 # import regex
 
 
- @view_function
- def process_request(request):
+@view_function
+def process_request(request):
        
 #     #hmod.RecentAds.objects.all().delete()
 
@@ -354,12 +354,12 @@
 
 #     bikes.sort(key=lambda x: x.difference)
 
-     context = {
+    context = {
 #         'form': form,
 #         'bikes': bikes,
-     }
+    }
 
-     return request.dmp.render('index.html', context)
+    return request.dmp.render('index.html', context)
 
 
 # class SearchForm(forms.Form):
